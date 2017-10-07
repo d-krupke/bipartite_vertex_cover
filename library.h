@@ -37,14 +37,13 @@ namespace bipartvc
     return true;
   }
 
-  
-  // Returns a vector with all selected vertices
-  // @input graph: A BGL graph
-  // @input partition_classifier: (vertex_descriptor)->Partition A functor (e.g. lambda) that classifies the vertices
-  // into the partitions.
+  /// Returns a vector with all selected vertices
+  /// @input graph: A BGL graph
+  /// @input partition_classifier: (vertex_descriptor)->Partition A functor (e.g. lambda) that classifies the vertices
+  /// into the partitions.
   template<typename G, typename F>
   std::vector<typename boost::graph_traits<G>::vertex_descriptor>
-  calculate_vertex_cover(const G &graph, F partition_classifier)
+  get_minimal_vertex_cover(const G &graph, F partition_classifier)
   {
     std::vector<typename boost::graph_traits<G>::vertex_descriptor> vertex_cover;
 
@@ -60,10 +59,6 @@ namespace bipartvc
     assert(is_valid_vertex_cover<G>(graph, vertex_cover)); //if this fails, the library is buggy.
     return vertex_cover;
   }
-
-
-
-
 }
 
 #endif

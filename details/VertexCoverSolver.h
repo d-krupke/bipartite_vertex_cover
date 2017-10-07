@@ -31,7 +31,7 @@ namespace bipartvc
         matchingSolver.solve();
         add_necessary_vertices_of_partition_a(matchingSolver);
         add_remaining_necessary_vertices_from_partition_b(matchingSolver);
-
+        return true;
       }
 
       bool
@@ -67,6 +67,7 @@ namespace bipartvc
               if (!in_vertex_cover.at(matchingSolver.getPartner(v))) {
                 const auto idx = boost::get(boost::vertex_index, *graph, v);
                 in_vertex_cover[idx] = true;
+                size+=1;
               }
             }
           }
@@ -79,6 +80,7 @@ namespace bipartvc
         const auto idx = boost::get(boost::vertex_index, *graph, v);
         if (in_vertex_cover.at(idx)) { return; }
         in_vertex_cover.at(idx) = true;
+        size+=1;
         for (const auto &n: boost::make_iterator_range(boost::adjacent_vertices(v, *graph))) {
           for (const auto &nn: boost::make_iterator_range(boost::adjacent_vertices(n, *graph))) {
             recursive_add(nn);
@@ -89,6 +91,7 @@ namespace bipartvc
       const G *graph;
       F partition_classifier;
       std::vector<bool> in_vertex_cover;
+      size_t size=0;
     };
   }
 }

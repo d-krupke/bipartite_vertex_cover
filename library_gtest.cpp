@@ -47,14 +47,14 @@ TEST(Library, MinVertexCover)
   boost::add_edge(2, 5, graph);
   boost::add_edge(2, 6, graph);
 
-  auto vertex_cover = bipartvc::calculate_vertex_cover(graph,
-                                                       [](boost::graph_traits<Graph>::vertex_descriptor v) -> bipartvc::Partition {
-                                                           if (v < 3) {
-                                                             return bipartvc::Partition::A;
-                                                           } else {
-                                                             return bipartvc::Partition::B;
-                                                           }
-                                                       });
+  auto vertex_cover = bipartvc::get_minimal_vertex_cover(graph,
+                                                         [](boost::graph_traits<Graph>::vertex_descriptor v) -> bipartvc::Partition {
+                                                             if (v < 3) {
+                                                               return bipartvc::Partition::A;
+                                                             } else {
+                                                               return bipartvc::Partition::B;
+                                                             }
+                                                         });
 
   ASSERT_EQ(vertex_cover.size(), 3);
   ASSERT_TRUE(bipartvc::is_valid_vertex_cover(graph, vertex_cover));

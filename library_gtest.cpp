@@ -47,15 +47,33 @@ TEST(Library, MinVertexCover)
   boost::add_edge(2, 5, graph);
   boost::add_edge(2, 6, graph);
 
-  auto vertex_cover = bipartvc::get_minimal_vertex_cover(graph,
-                                                         [](boost::graph_traits<Graph>::vertex_descriptor v) -> bipartvc::Partition {
-                                                             if (v < 3) {
-                                                               return bipartvc::Partition::A;
-                                                             } else {
-                                                               return bipartvc::Partition::B;
-                                                             }
-                                                         });
+  auto partition_classifier = [](boost::graph_traits<Graph>::vertex_descriptor v) -> bipartvc::Partition {
+      if (v < 3) {
+        return bipartvc::Partition::A;
+      } else {
+        return bipartvc::Partition::B;
+      }
+  };
+  auto vertex_cover = bipartvc::get_minimal_vertex_cover(graph, partition_classifier);
 
   ASSERT_EQ(vertex_cover.size(), 3);
   ASSERT_TRUE(bipartvc::is_valid_vertex_cover(graph, vertex_cover));
+
+  //swap partitions (A is treated differently than B by the algorithm so we should check this)
+  auto complementary_partition_classifier = [](boost::graph_traits<Graph>::vertex_descriptor v) -> bipartvc::Partition {
+      if (v < 3) {
+        return bipartvc::Partition::B;
+      } else {
+        return bipartvc::Partition::A;
+      }
+  };
+  auto vertex_cover_2 = bipartvc::get_minimal_vertex_cover(graph, complementary_partition_classifier);
+
+  ASSERT_EQ(vertex_cover_2.size(), 3);
+  ASSERT_TRUE(bipartvc::is_valid_vertex_cover(graph, vertex_cover_2));
+
+  //and with automatic partition detection.
+  auto vertex_cover_3 = bipartvc::get_minimal_vertex_cover(graph);
+  ASSERT_EQ(vertex_cover_3.size(), 3);
+  ASSERT_TRUE(bipartvc::is_valid_vertex_cover(graph, vertex_cover_3));
 }

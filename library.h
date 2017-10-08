@@ -13,7 +13,13 @@
 namespace bipartvc
 {
 
-  //you can also use boost::is_bipartite. This one is just to evaluate the partition_classifier.
+  /// For checking if a given partition is a valid bipartition of the graph.
+  /// You can also use boost::is_bipartite. This one is just to evaluate the partition_classifier.
+  /// \tparam G A boost graph, e.g., boost::adjacency_list<...>
+  /// \tparam F A functor/lambda '(vertex_descriptor)->Partition' that classifies the partition. See ./Partition.cpp
+  /// \param graph The graph
+  /// \param partition_classifier The functor/lambda
+  /// \return True, iff valid bipartition.
   template<typename G, typename F>
   bool
   is_bipartite(const G &graph, F partition_classifier)
@@ -26,6 +32,11 @@ namespace bipartvc
     return true;
   };
 
+  /// Checks if a given vertex cover actually covers all edges in a graph. Does not check for optimality.
+  /// \tparam G A boost graph, e.g., boost::adjacency_list<...>
+  /// \param graph The graph
+  /// \param vertex_cover A list with all the vertices in the vertex cover.
+  /// \return true iff valid
   template<typename G>
   bool
   is_valid_vertex_cover(const G &graph,
@@ -39,10 +50,12 @@ namespace bipartvc
     return true;
   }
 
-  /// Returns a vector with all selected vertices
-  /// @input graph: A BGL graph
-  /// @input partition_classifier: (vertex_descriptor)->Partition A functor (e.g. lambda) that classifies the vertices
-  /// into the partitions.
+  /// Computes a min vertex cover of a bipartite graph.
+  /// \tparam G A BGL graph, e.g., boost::adjacency_list<...>
+  /// \tparam F A functor/lambda '(vertex_descriptor)->Partition' that classifies the partition. See ./Partition.cpp
+  /// \param graph The bipartite graph
+  /// \param partition_classifier The functor/lambda
+  /// \return A vector with all the vertices selected for the vertex cover. No repetitions in it.
   template<typename G, typename F>
   std::vector<typename boost::graph_traits<G>::vertex_descriptor>
   get_minimal_vertex_cover(const G &graph, F partition_classifier)
@@ -62,6 +75,10 @@ namespace bipartvc
     return vertex_cover;
   }
 
+  /// Computes a min vertex cover of a bipartite graph.
+  /// \tparam G A BGL graph, e.g., boost::adjacency_list<...>
+  /// \param graph The bipartite graph
+  /// \return A vector with all the vertices selected for the vertex cover. No repetitions in it.
   template<typename G>
   std::vector<typename boost::graph_traits<G>::vertex_descriptor>
   get_minimal_vertex_cover(const G &graph)

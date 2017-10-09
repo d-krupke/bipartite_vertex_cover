@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <boost/graph/adjacency_list.hpp>
-#include "library.h"
+#include "min_vertex_cover.h"
 
 TEST(Library, IsValidVertexCover)
 {

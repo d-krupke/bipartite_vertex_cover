@@ -6,9 +6,9 @@
 file(GLOB_RECURSE GTEST_SOURCES "../**/*_gtest.cpp")
 MESSAGE("Including the following gtest files: ${GTEST_SOURCES}")
 
-add_executable(unit_tester ${GTEST_SOURCES} ./gtest_main.cpp ../library_gtest.cpp)
+add_executable(bipvc_unit_tester ${GTEST_SOURCES} ./gtest_main.cpp ../min_vertex_cover_gtest.cpp)
 
-target_link_libraries(unit_tester gtest)
+target_link_libraries(bipvc_unit_tester gtest)
 
-target_include_directories(unit_tester PRIVATE ${INCLUDE_DIRS})
-target_link_libraries(unit_tester ${LIBRARIES})
+target_include_directories(bipvc_unit_tester PRIVATE ${INCLUDE_DIRS})
+target_link_libraries(bipvc_unit_tester ${LIBRARIES})

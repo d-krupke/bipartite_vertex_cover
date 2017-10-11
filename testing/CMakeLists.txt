@@ -6,7 +6,8 @@
 file(GLOB_RECURSE GTEST_SOURCES "../**/*_gtest.cpp")
 MESSAGE("Including the following gtest files: ${GTEST_SOURCES}")
 
-add_executable(bipvc_unit_tester ${GTEST_SOURCES} ./gtest_main.cpp ../min_vertex_cover_gtest.cpp)
+set(SOURCES ../min_vertex_cover.h ../details/MatchingSolver.h ../details/utils.h ../details/VertexCoverSolver.h)
+add_executable(bipvc_unit_tester ${GTEST_SOURCES} ${SOURCES} ./gtest_main.cpp ../min_vertex_cover_gtest.cpp)
 
 target_link_libraries(bipvc_unit_tester gtest)
 

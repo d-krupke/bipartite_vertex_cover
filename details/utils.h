@@ -1,5 +1,5 @@
 //
-// Created by Dominik Krupke, dominik@krupke.cc on 10/7/17.
+// Created by Dominik Krupke, http://krupke.cc on 10/7/17.
 //
 
 #ifndef BIPARTITE_VERTEX_COVER_UTILS_H
